@@ -24,63 +24,46 @@
             <tr>
 
                 <?php
+                require "userTimeline.php";
+                $results = Timeline::getUserTimeline("mittromney");
+                $search = "job";
 
-                // Allows use of Search API
-                require "TwitterSearch.php";
-
-                // Instantiates new TwitterSearch class
-                $search = new TwitterSearch();
-
-                // Queries are made anonymously, but this tells Twitter who we are
-                $search->user_agent = 'phptwittersearch:t.debate36@gmail.com';
-
-                // Makes a search for tweets by Romney or Obama
-                $search->generalFrom('from:MittRomney');
-
-                // This can search for keywords, but is currently commented out
-                //$search->contains('immigration');
-
-                // Limits results to 50 tweets
-                $results = $search->rpp(50)->results();
+                print "<th class='accountTitle'>@MittRomney</th><th class='accountTitle'>@BarackObama</th><tr/><tr><td>";
 
                 // This loop prints the search results nicely with the
                 // following info: from_user(who posted it),
                 // created_at(the time), and text(the tweet itself).
-
-                print "<th class='accountTitle'>@MittRomney</th><th class='accountTitle'>@BarackObama</th><tr/><tr><td>";
-
-                // first while for first twitter account
+                // First while for first twitter account
                 while($tweet = next($results))
                 {
-                    print "<div class='tweetCell'><b>";
-                    //echo $tweet->from_user;
-                    //print "<br>";
-                    echo $tweet->created_at;
-                    print "</b><br>";
-                    echo $tweet->text;
-                    echo "<br></div>";
+                    if (stristr($tweet->text, $search))
+                    {
+                        print "<div class='tweetCell'><b>";
+                        //echo $tweet->from_user;
+                        //print "<br>";
+                        echo $tweet->created_at;
+                        print "</b><br>";
+                        echo $tweet->text;
+                        echo "<br></div>";
+                    }
                 }
 
-                // Makes a search for tweets by Romney or Obama
-                $search->generalFrom('from:BarackObama');
-
-                // This can search for keywords, but is currently commented out
-                //$search->contains('immigration');
-
-                // Limits results to 50 tweets
-                $results = $search->rpp(50)->results();
+                $results = Timeline::getUserTimeline("barackobama");
 
                 print "</td><td>";
                 // second while for second twitter account
                 while($tweet = next($results))
                 {
-                    print "<div class='tweetCell'><b>";
-                    //echo $tweet->from_user;
-                    //print "<br>";
-                    echo $tweet->created_at;
-                    print "</b><br>";
-                    echo $tweet->text;
-                    echo "<br></div>";
+                    if (stristr($tweet->text, $search))
+                    {
+                        print "<div class='tweetCell'><b>";
+                        //echo $tweet->from_user;
+                        //print "<br>";
+                        echo $tweet->created_at;
+                        print "</b><br>";
+                        echo $tweet->text;
+                        echo "<br></div>";
+                    }
                 }
 
                 print "</td>"
