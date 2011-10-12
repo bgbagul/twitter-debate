@@ -24,9 +24,9 @@
             <tr>
 
                 <?php
-                require "userTimeline.php";
+                require "tDebate.php";
                 $results = Timeline::getUserTimeline("mittromney");
-                $search = "job";
+                $searchArray = array("Social Security", "Benefits", "disability", "retirement", "insurance");
 
                 print "<th class='accountTitle'>@MittRomney</th><th class='accountTitle'>@BarackObama</th><tr/><tr><td>";
 
@@ -36,7 +36,7 @@
                 // First while for first twitter account
                 while($tweet = next($results))
                 {
-                    if (stristr($tweet->text, $search))
+                    if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
                     {
                         print "<div class='tweetCell'><b>";
                         //echo $tweet->from_user;
@@ -54,7 +54,7 @@
                 // second while for second twitter account
                 while($tweet = next($results))
                 {
-                    if (stristr($tweet->text, $search))
+                    if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
                     {
                         print "<div class='tweetCell'><b>";
                         //echo $tweet->from_user;
