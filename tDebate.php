@@ -28,6 +28,7 @@ class Timeline
     }
     
     // Tests the existence of a URL
+    // From: http://stackoverflow.com/questions/1239068/ping-site-and-return-result-in-php
     static function urlExists($url=NULL)  
     {  
         if($url == NULL)
