@@ -7,13 +7,50 @@
 class Timeline
 {
     // Makes a wrapper to search Twitter for a specific user's Tweets
-    static function getUserTimeline($user) {
+    static function getUserTimeline($user)
+    {
         $searchUrl .= "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
         $searchUrl .= "$user";
         $searchUrl .= "&count=200";
-        $searchString = file_get_contents($searchUrl);
-        $jsonSearch = json_decode($searchString);
-        return $jsonSearch;
+        
+        // Tests that a URL works before getting contents
+        // Will try 5 times before failing
+        for ($i=0; $i<5; $i++)
+        {
+            if (Timeline::urlExists($searchUrl))
+            {
+                $searchString = file_get_contents($searchUrl);
+                $jsonSearch = json_decode($searchString);
+                return $jsonSearch;
+            }
+        }
+        return FALSE;
+    }
+    
+    // Tests the existence of a URL
+    static function urlExists($url=NULL)  
+    {  
+        if($url == NULL)
+        {
+            return false;
+        }
+        
+        $ch = curl_init($url);  
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);  
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);  
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
+        $data = curl_exec($ch);  
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);  
+        curl_close($ch);
+        
+        if($httpcode>=200 && $httpcode<300)
+        {  
+            return true;  
+        }
+        else
+        {  
+            return false;  
+        }  
     }
 }
 
