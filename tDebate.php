@@ -9,7 +9,7 @@ class Timeline
     // Makes a wrapper to search Twitter for a specific user's Tweets
     static function getUserTimeline($user)
     {
-        $searchUrl .= "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
+        $searchUrl = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
         $searchUrl .= "$user";
         $searchUrl .= "&count=200";
         
