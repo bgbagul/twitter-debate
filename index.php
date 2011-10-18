@@ -36,8 +36,8 @@
                 // First while for first twitter account
                 while($tweet = next($results))
                 {
-                    //if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
-                    //{
+                    if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
+                    {
                         print "<div class='tweetCell'><b>";
                         //echo $tweet->from_user;
                         //print "<br>";
@@ -45,7 +45,7 @@
                         print "</b><br>";
                         echo $tweet->text;
                         echo "<br></div>";
-                    //}
+                    }
                 }
 
                 $results = Timeline::getUserTimeline("barackobama");
@@ -54,8 +54,8 @@
                 // second while for second twitter account
                 while($tweet = next($results))
                 {
-                    //if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
-                    //{
+                    if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
+                    {
                         print "<div class='tweetCell'><b>";
                         //echo $tweet->from_user;
                         //print "<br>";
@@ -63,7 +63,7 @@
                         print "</b><br>";
                         echo $tweet->text;
                         echo "<br></div>";
-                    //}
+                    }
                 }
 
                 print "</td>"
