@@ -1,11 +1,26 @@
 <?php
 
-    //Twitter Debate, v0.0
+    //Twitter Debate, v0.2
     //By Christopher Blair, Patrick McAuliffe, Balasaheb Bagul, Jane Janeczko, and Michael Madaus
     //EECS 338 Practicum in Intelligent Information Systems (Fall 2011)
 
 class Timeline
 {
+    // Returns all Tweets from an array of user names, for example: array("barackobama", "whitehouse");
+    static function getMultiUserTimeline($arrayOfUsers)
+    {
+        $collectedTweets = array();
+        foreach ($arrayOfUsers as &$individualUser)
+	{
+            $newTweets = Timeline::getUserTimeline($individualUser);
+            foreach($newTweets as &$tweet)
+            {
+                array_push($collectedTweets, $tweet);
+            }
+	}
+        return $collectedTweets;
+    }
+        
     // Makes a wrapper to search Twitter for a specific user's Tweets
     static function getUserTimeline($user)
     {

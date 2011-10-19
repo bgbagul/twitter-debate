@@ -1,5 +1,5 @@
 <!--
-    Twitter Debate, v0.0
+    Twitter Debate, v0.2
     By Christopher Blair, Patrick McAuliffe, Balasaheb Bagul, Jane Janeczko, and Michael Madaus
     EECS 338 Practicum in Intelligent Information Systems (Fall 2011)
 -->
@@ -21,6 +21,7 @@
 
                 <?php
                     require "tDebate.php";
+                    require "terms.php";
 
                     function showOptionsDrop ($array, $active, $echo=true) {
                         $string = '';
@@ -38,31 +39,7 @@
                             return $string;
                         }
                     }
-
-                    $twitterAccounts1 = array('BarackObama'=>'Barack Obama', 'THEHermanCain'=>'Herman Cain',
-                        'MittRomney'=>'Mitt Romney', 'RonPaul'=>'Ron Paul', 'RickSantorum'=>'Rick Santorum',
-                        'MicheleBachmann'=>'Michele Bachman', 'NewtGingrich'=>'Newt Gingrich',
-                        'GovGaryJohnson'=>'Gary Johnson', 'GovernorPerry'=>'Rick Perry', 'JonHuntsman'=>'Jon Huntsman');
-                    $twitterAccounts2 = array('BarackObama'=>'Barack Obama', 'THEHermanCain'=>'Herman Cain',
-                        'MittRomney'=>'Mitt Romney', 'RonPaul'=>'Ron Paul', 'RickSantorum'=>'Rick Santorum',
-                        'MicheleBachmann'=>'Michele Bachman', 'NewtGingrich'=>'Newt Gingrich',
-                        'GovGaryJohnson'=>'Gary Johnson', 'GovernorPerry'=>'Rick Perry', 'JonHuntsman'=>'Jon Huntsman');
-                    $twitterTopics = array("economy"=>"Economy", "immigration"=>"Immigration", "healthcare"=>"Health Care", "socialsecurity"=>"Social Security");
-
-                    $searchArray1 = array("Economy", "Jobs", "Unemployment", "Spend", "Stimulus",
-                        "Taxes", "Worker", "Labor", "Fed ", "Econ", "AmericanJobsAct", "WallStreet",
-                        "EconDebate", "Companies", "Company", "Salary", "Salaries", "Audit", "Money",
-                        "Wage", "Consumer", "Work", "Prosperity", "FairTax", "Tax", "Capital",
-                        "FederalReserve", "Deficit", "Business", "Investment", "Bailout", "Funds",
-                        "Rich", "Poor", "Outsource", "Poverty");
-                    $searchArray2 = array("Immigration", "Citizenship", "DreamAct", "Border", "Fence", 
-                        "E-verify", "Everify", "Arizona", "Alabama", "deportation", "USCIS",
-                        "naturalization", "resident", "customs", "security");
-                    $searchArray3 = array("Healthcare", "Health", "care", "Obamacare", "Insured",
-                        "uninsured", "access", "socialized", "medicine", "doctor", "physician",
-                        "medical", "benefits", "insurance", "Medicaid", "Medicare",
-                        "universal", "M.D.", "MD", "drugs", "sick");
-                    $searchArray4 = array("SocialSecurity", "Benefits", "disability", "SS", "retirement");
+                    
             ?>
 
             <div id = "containerChoose">
@@ -89,7 +66,8 @@
 
             <?php
 
-                if (!empty($_GET['topic'])) {
+                if (!empty($_GET['topic']))
+                {
                     $twitterTopic = $_GET['topic'];
                     $twitterUser1 = $_GET['user1'];
                     $twitterUser2 = $_GET['user2'];
@@ -106,8 +84,9 @@
                     } else if ($twitterTopic === "socialsecurity") {
                         $searchArray = $searchArray4;
                     }
-
-                } else {
+                    
+                }
+                else {
                     $twitterTopic = "Economy";
                     $twitterUser1 = "MittRomney";
                     $twitterUser2 = "BarackObama";
@@ -121,9 +100,6 @@
                 // Makes a search for tweets
                 $results = Timeline::getUserTimeline($twitterUser1);
 
-                // This loop prints the search results nicely with the
-                // following info: from_user(who posted it),
-                // created_at(the time), and text(the tweet itself).
                 // First while for first twitter account
                 while($tweet = next($results)) {
 
