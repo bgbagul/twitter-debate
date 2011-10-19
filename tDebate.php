@@ -15,6 +15,7 @@ class Timeline
             $newTweets = Timeline::getUserTimeline($individualUser);
             foreach($newTweets as &$tweet)
             {
+                $tweet->name=$individualUser;
                 array_push($collectedTweets, $tweet);
             }
 	}
