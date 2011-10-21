@@ -68,3 +68,15 @@ html, .main {
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
 }
+td.leftCell {
+    background-color: #9999CC;
+    color: black;
+    border-bottom: 1px solid lightGrey;
+    margin-bottom: 5px;
+}
+td.rightCell {
+    background-color: #B8B8B8;
+    color: black;
+    border-bottom: 1px solid lightGrey;
+    margin-bottom: 5px;
+}

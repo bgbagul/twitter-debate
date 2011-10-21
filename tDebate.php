@@ -19,6 +19,7 @@ class Timeline
                 array_push($collectedTweets, $tweet);
             }
 	}
+        usort($collectedTweets, "Timeline::sortByTime");
         return $collectedTweets;
     }
         
@@ -27,7 +28,7 @@ class Timeline
     {
         $searchUrl = "http://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
         $searchUrl .= "$user";
-        $searchUrl .= "&count=200";
+        $searchUrl .= "&count=10";
         
         // Tests that a URL works before getting contents
         // Will try 5 times before failing
@@ -37,6 +38,7 @@ class Timeline
             {
                 $searchString = file_get_contents($searchUrl);
                 $jsonSearch = json_decode($searchString);
+                usort($jsonSearch, "Timeline::sortByTime");
                 return $jsonSearch;
             }
         }
@@ -68,6 +70,25 @@ class Timeline
         {  
             return false;  
         }  
+    }
+    
+    static function sortByTime($a, $b)
+    {
+        $timeA = strtotime($a->created_at);
+        $timeB = strtotime($b->created_at);
+        
+        if ($timeA == $timeB)
+        {
+            return 0;
+        }
+        elseif ($timeA < $timeB)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
     }
 }
 
