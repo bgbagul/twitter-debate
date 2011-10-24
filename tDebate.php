@@ -5,7 +5,7 @@
     //EECS 338 Practicum in Intelligent Information Systems (Fall 2011)
 
 class Timeline
-{
+{    
     // Returns all Tweets from an array of user names, for example: array("barackobama", "whitehouse");
     static function getMultiUserTimeline($arrayOfUsers)
     {
@@ -13,10 +13,23 @@ class Timeline
         foreach ($arrayOfUsers as &$individualUser)
 	{
             $newTweets = Timeline::getUserTimeline($individualUser);
-            foreach($newTweets as &$tweet)
+            if ($newTweets->error == "Rate limit exceeded. Clients may not make more than 150 requests per hour.")
             {
-                $tweet->name=$individualUser;
-                array_push($collectedTweets, $tweet);
+                print "Error: rate limit exceeded";
+                print "<br>";
+            }
+            elseif ($newTweets == FALSE)
+            {
+                print "An unknown erorr has occurred.";
+                print "<br>";
+            }
+            else
+            {
+                foreach($newTweets as &$tweet)
+                {
+                    $tweet->name=$individualUser;
+                    array_push($collectedTweets, $tweet);
+                }
             }
 	}
         usort($collectedTweets, "Timeline::sortByTime");
@@ -28,7 +41,7 @@ class Timeline
     {
         $searchUrl = "http://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
         $searchUrl .= "$user";
-        $searchUrl .= "&count=10";
+        $searchUrl .= "&count=20";
         
         // Tests that a URL works before getting contents
         // Will try 5 times before failing

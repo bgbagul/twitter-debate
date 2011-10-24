@@ -21,7 +21,7 @@ root {
 Design by http://www.templateaccess.com
 Released for free under a Creative Commons Attribution 3.0 License
 */
-@charset "utf-8";
+
 body {
     margin:0;
     padding:0;
@@ -49,10 +49,18 @@ html, .main {
     background-color:lightGrey;
     color:grey;
     width: 100%;
-    padding-left: 25px;
     padding-top: 35px;
     padding-bottom: 25px;
     font-size: 50px;
+}
+
+.container {
+    width: 100%;
+}
+
+.choiceContainer {
+    width: 100%;
+    margin-top: 25px;
 }
 
 .accountTitle {
@@ -64,19 +72,51 @@ html, .main {
 /*    border-left: 1px solid lightGrey;*/
 }
 
+.titleElement {
+    width: 33%;
+    float: left;
+    text-align: center;
+}
+
+.tweetsContainer {
+    clear: left;
+}
+
+.imagesLeft {
+    width: 20%;
+}
+
+.imagesRight {
+    width: 20%;
+}
+
+.tweetsLeft {
+    width: 30%;
+}
+
+.tweetsRight {
+    width: 30%
+}
+
 .tweetCell {
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
 }
+
 td.leftCell {
     background-color: #9999CC;
     color: black;
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
+    padding: 10px;
+    -moz-border-radius: 25px;
 }
+
 td.rightCell {
     background-color: #B8B8B8;
     color: black;
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
+    padding: 10px;
+    -moz-border-radius: 25px;
 }
