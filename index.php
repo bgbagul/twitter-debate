@@ -14,6 +14,7 @@
     <body>
         
         <?php
+            $onlyGetOneAccount = true;
             require "tDebate.php";
             require "terms.php";
             require "display.php";
@@ -41,7 +42,9 @@
                 $twitterTopic = $_GET['topic'];
                 $twitterUser1 = $_GET['user1'];
                 $twitterUser2 = $_GET['user2'];
+                
 
+                
                 if ($twitterTopic === "economy") {
                     $searchArray = $searchArray1;
 
@@ -53,6 +56,17 @@
 
                 } else if ($twitterTopic === "socialsecurity") {
                     $searchArray = $searchArray4;
+                    
+                } else if ($twitterTopic == "jobs") {
+                    $searchArray = $searchArray5;
+                    
+                } else if ($twitterTopic== "taxes") {
+                    $searchArray = $searchArray6;
+                    
+                } else if ($twitterTopic == "deficit") {
+                    $searchArray = $searchArray7;
+                } else if ($twitterTopic == "environment") {
+                    $searchArray = $searchArray8;
                 }
 
             } else {
@@ -121,16 +135,15 @@
 
                     <?php
 
-                    print "<th class='accountTitle'></th><th class='accountTitle'></th><th class='accountTitle'></th><th class='accountTitle'></th>";
-                    print "</tr>";
-                    print "<tr style='height:25px;'></tr>";
-//                        print "<th></th>";
-//                        print "<th class='accountTitle'>@" . $twitterUser1 . "</th>";
-//                       print "<th class='accountTitle'>@" . $twitterUser2 . "</th>";
-//                        print "<th></th>";
+                        print "<th class='accountTitle'></th><th class='accountTitle'></th><th class='accountTitle'></th><th class='accountTitle'></th>";
+                        print "</tr>";
+                        print "<tr style='height:25px;'></tr>";
 
-                        // Makes a search for tweets
-                        // $results = Timeline::getMultiUserTimeline(array((string)$twitterUser1, (string)$twitterUser2));
+                        $isAUser1Tweet = FALSE;
+                        $isAUser2Tweet = FALSE;
+                        $foundAHit = FALSE;
+                        $leftWentLast = TRUE;
+                        $counter = 0;
                         $user1Accounts = User::getAccounts($twitterUser1);
                         $user2Accounts = User::getAccounts($twitterUser2);
                         $allUserAccounts = array_merge($user1Accounts, $user2Accounts);
@@ -138,37 +151,54 @@
 
                         foreach ($results as &$tweet)
                         {
-                            if (StringUtility::searchStringWithArray($tweet->text,$searchArray))
+                            $foundAHit = StringUtility::searchStringWithArray($tweet->text,$searchArray);
+                            $isAUser1Tweet = in_array($tweet->name,$user1Accounts);
+                            $isAUser2Tweet = in_array($tweet->name,$user2Accounts);
+                            
+                            if ($foundAHit && $isAUser1Tweet)
+                            {
+                                User::responseCheck($counter, $leftWentLast, TRUE);
+                                $leftWentLast = TRUE;
+                            }
+                            elseif ($foundAHit && $isAUser2Tweet)
+                            {
+                                User::responseCheck($counter, $leftWentLast, FALSE);
+                                $leftWentLast = FALSE;
+                            }
+                            
+                            if (($counter < $maxResponses) && ($foundAHit == TRUE))
                             {
                                 print "<tr>";
-                                if (in_array($tweet->name,$user1Accounts))
+                                if ($isAUser1Tweet)
                                 {
                                     Display::candidateImage($tweet->name);
                                     print "<td class='leftCell'>";
                                 }
-                                elseif (in_array($tweet->name,$user2Accounts))
+                                elseif ($isAUser2Tweet)
                                 {
                                     print '<td></td>';
                                     print '<td></td>';
                                     print "<td class='rightCell'>";
                                 }
-                                print $tweet->text;
+                                print StringUtility::searchStringBold($tweet->text,$searchArray);
                                 print "<br>";
                                 print "<font size=1>@" . $tweet->name . "</font>";
                                 print "<br>";
                                 $dateTemp = new DateTime($tweet->created_at);
                                 print "<font size=1>" . date_format($dateTemp, 'D M j H:i:s') . "</font>";
                                 print "</td>";
-                                if (in_array($tweet->name,$user1Accounts))
+                                if ($isAUser1Tweet)
                                 {
                                     print "<td></td>";
                                     print '<td></td>';
                                 }
-                                elseif (in_array($tweet->name,$user2Accounts))
+                                elseif ($isAUser2Tweet)
                                 {
                                     Display::candidateImage($tweet->name);
                                 }
                             }
+                            $isAUser1Tweet = FALSE;
+                            $isAUser2Tweet = FALSE;
                         }
 
                         print "</td>"
