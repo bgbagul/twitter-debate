@@ -18,7 +18,7 @@
     
             //BUILDS A TWEET ARCHIVE OF ALL OUR CANDIDATES.
             //IT USUALLY TAKES ABOUT 5 MINUTES FOR ME.
-            Archive::buildEntireArchive();
+            //Archive::buildEntireArchive();
             
             
             //BUILDS AN INDIVIDUAL CANDIDATE ARCHIVE OF JSON FILES
