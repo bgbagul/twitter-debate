@@ -15,14 +15,16 @@
             require "terms.php";
             require "tDebate.php";
             require "display.php";
-    
+
+            set_time_limit(60000);
+
             //BUILDS A TWEET ARCHIVE OF ALL OUR CANDIDATES.
             //IT USUALLY TAKES ABOUT 5 MINUTES FOR ME.
-            //Archive::buildEntireArchive();
+            Archive::buildEntireArchive();
             
             
             //BUILDS AN INDIVIDUAL CANDIDATE ARCHIVE OF JSON FILES
-            //Archive::buildCandidateArchive($candidateAccounts5);
+            Archive::buildCandidateArchive($candidateAccounts5);
             
             //SAMPLE CALLS TO RETRIEVE THE TWEETS IN THE JSON FILES
             //$economySave = json_decode(file_get_contents("tweets/obama/economy.json"));

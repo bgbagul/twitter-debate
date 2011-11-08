@@ -13,18 +13,18 @@
     $twitterTopics = array("economy"=>"Economy", "immigration"=>"Immigration", "healthcare"=>"Health Care",
         "socialsecurity"=>"Social Security", "jobs"=>"Jobs", "taxes"=>"Taxes", "deficit"=>"Deficit", "environment"=>"Environment");
 
-    $searchArray1 = array("Economy", "Spend", "Stimulus", "Taxes", "Fed", "Econ",
-        "Wall Street", "EconDebate", "Audit", "Money", "Consumer", "Prosperity", "Capital", "Deficit",
+    $searchArray1 = array(" Economy", "Economy ", " Spend", "Spend ", " Stimulus", "Stimulus ", " Taxes", "Taxes ", " Fed", "Fed ", " Econ", "Econ ",
+        "Wall Street", "EconDebate", " Audit", "Audit ", "Money", "Consumer", "Prosperity", "Capital", "Deficit",
         "Business", "Investment", "Bailout", "Funds", "Rich", "Poor");
-    $searchArray2 = array("Immigration", "Citizenship", "DreamAct", "Border", "Fence", "E-verify", "Arizona",
-        "Alabama", "deportation", "USCIS", "naturalization", "resident", "customs", "security");
-    $searchArray3 = array("Healthcare", "Obamacare", "Insured", "uninsured", "access", "socialized", "medicine", "doctor",
+    $searchArray2 = array("Immigration", "Citizenship", "DreamAct", "Border", " Fence", "Fence ", "E-verify", "Arizona",
+        "Alabama", "deportation", "USCIS", "naturalization", " resident", "resident ", "customs", "security");
+    $searchArray3 = array("Healthcare", "Obamacare", "Insured", "uninsured", " access", "access ", "socialized", "medicine", "doctor",
         "physician", "medical", "benefits", "insurance", "Medicaid", "Medicare", "universal");
     $searchArray4 = array("SocialSecurity", "Benefits", "disability", " SS ", "retirement");
     $searchArray5 = array("Jobs", "Unemployment", "Employment", "Taxes", "Worker", "Labor",
         "American Jobs Act", "Wall Street", "Companies", "Company", "Salary", "Salaries", "Wage",
         "Work", "Deficit", "Outsource", "Poverty", "Hire", "Union");
-    $searchArray6 = array("Taxes", "Wall Street", "Fed", "Audit", "Payroll Tax", "FairTax", "Capital gains tax",
+    $searchArray6 = array("Taxes", "Wall Street", " Fed", "Fed ", "Audit", "Payroll Tax", "FairTax", "Capital gains tax",
         "Federal Reserve", "Flat Tax");
     $searchArray7 = array("Deficit", "Bailout", "Spending", "Cut", "Investment", "Bank", "Economic",
         "Growth", "Funds", "Consumer", "Recovery");

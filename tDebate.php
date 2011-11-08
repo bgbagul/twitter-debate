@@ -1,15 +1,7 @@
 <?php
 
-    ini_set( "display_errors", 0);
+//    ini_set( "display_errors", 0);
 
-        if (StringUtility::searchStringWithArray("hello world!",array("world")))
-    {
-        echo "The method worked.<BR>";
-    }
-    else
-    {
-        echo "The method failed.<BR>";
-    }
     //Twitter Debate, v0.2
     //By Christopher Blair, Patrick McAuliffe, Balasaheb Bagul, Jane Janeczko, and Michael Madaus
     //EECS 338 Practicum in Intelligent Information Systems (Fall 2011)
@@ -25,7 +17,9 @@ class Timeline
             $newTweets = Timeline::getUserTimeline($individualUser);
             if ($newTweets == FALSE)
             {
-                print "An unknown erorr has occurred.";
+                print "An error has occurred while processing this account:";
+                print "<br>";
+                print $individualUser;
                 print "<br>";
             }
             else
@@ -117,15 +111,15 @@ class StringUtility
     // Returns false otherwise
     static function searchStringWithArray($str, $arr)
     {
-        global $excludeArray;
-
-        foreach ($excludeArray as &$searchTerm)
-        {
-            if (stripos($str, $searchTerm) !== FALSE)
-            {
-                return FALSE;
-            }
-        }
+        //global $excludeArray;
+        //
+        //foreach ($excludeArray as &$searchTerm)
+        //{
+        //    if (stripos($str, $searchTerm) !== FALSE)
+        //    {
+        //        return FALSE;
+        //    }
+        //}
 
         foreach ($arr as &$searchTerm)
         {
@@ -147,7 +141,7 @@ class StringUtility
         foreach ($arr as &$searchTerm)
         {
             $searchResult = stripos($stringResult, $searchTerm);
-            if ($searchResult != false)
+            if ($searchResult !== false)
             {
                 $stringResult = StringUtility::stringInsert("</B>", $stringResult, $searchResult + strlen($searchTerm));
                 $stringResult = StringUtility::stringInsert("<B>", $stringResult, $searchResult);

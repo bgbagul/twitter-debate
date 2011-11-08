@@ -26,7 +26,7 @@ class Display
                 print '<td><img src="images/ObamaNews.jpg" alt="@ObamaNews" /></td>';   
             }
             else if($candidate=="TheDemocrats"){
-                print '<td><img src="images/TheDemocrats.png" alt="@TheDemocrats" /></td>';   
+                print '<td><img src="images/TheDemocrats.png" alt="@TheDemocrats" /></td>';
             }
             else if($candidate=="BarackObamaUSA"){
                 print '<td><img src="images/BarackObamaUSA.jpg" alt="@BarackObamaUSA" /></td>';   
@@ -63,7 +63,7 @@ class Display
                 print '<td><img src="images/Mittisms.jpg" alt="@Mittisms" /></td>';   
             }
             else if($candidate=="RomneyCentral"){
-                print '<td><img src="images/RomneyCentral.png" alt="@RomneyCentral" /></td>';   
+                print '<td><img src="images/RomneyCentral.jpg" alt="@RomneyCentral" /></td>';   
             }
             else if($candidate=="PlanetRomney"){
                 print '<td><img src="images/PlanetRomney.jpg" alt="@PlanetRomney" /></td>';   
@@ -84,13 +84,13 @@ class Display
                 print '<td><img src="images/RonPaul_2012.jpg" alt="@RonPaul_2012" /></td>';   
             }
             else if($candidate=="RonPaulForums"){
-                print '<td><img src="images/RonPaulForums.png" alt="@RonPaulForums" /></td>';   
+                print '<td><img src="images/RonPaulForums.jpg" alt="@RonPaulForums" /></td>';   
             }
             else if($candidate=="RonPaulNews"){
                 print '<td><img src="images/RonPaulNews.jpg" alt="@RonPaulNews" /></td>';   
             }
             else if($candidate=="RonPaul4Liberty"){
-                print '<td><img src="images/RonPaul4Liberty.png" alt="@RonPaul4Liberty" /></td>';   
+                print '<td><img src="images/RonPaul4Liberty.jpg" alt="@RonPaul4Liberty" /></td>';   
             }
             else {
                 print '<td><img src="images/RonPaul.jpg" alt="@ronpaul" /></td>';   
@@ -121,7 +121,7 @@ class Display
                 print '<td><img src="images/Newt2012HQ.jpg" alt="@Newt2012HQ" /></td>';   
             }
             else if($candidate=="NewtG_News"){
-                print '<td><img src="images/NewtG_News.png" alt="@NewtG_News" /></td>';   
+                print '<td><img src="images/NewtG_News.jpg" alt="@NewtG_News" /></td>';   
             }
             else {
                 print '<td><img src="images/NewtGingrich.jpg" alt="@NewtGingrich" /></td>';   
@@ -129,18 +129,18 @@ class Display
         }
         elseif (in_array($candidate,$candidateAccounts8))
         {
-            print '<td><img src="images/GovGaryJohnson.png" alt="@GovGaryJohnson" /></td>';
+            print '<td><img src="images/GovGaryJohnson.jpg" alt="@GovGaryJohnson" /></td>';
         }
         elseif (in_array($candidate,$candidateAccounts9))
         {
             if($candidate=="GovernorPerry"){
-                print '<td><img src="images/GovernorPerry.gif" alt="@GovernorPerry" /></td>';   
+                print '<td><img src="images/GovernorPerry.jpg" alt="@GovernorPerry" /></td>';   
             }
             else if($candidate=="TeamRickPerry"){
-                print '<td><img src="images/TeamRickPerry.png" alt="@TeamRickPerry" /></td>';   
+                print '<td><img src="images/TeamRickPerry.jpg" alt="@TeamRickPerry" /></td>';   
             }
             else if($candidate=="PerryTruthTeam"){
-                print '<td><img src="images/PerryTruthTeam.png" alt="@PerryTruthTeam" /></td>';   
+                print '<td><img src="images/PerryTruthTeam.jpg" alt="@PerryTruthTeam" /></td>';   
             }
             else if($candidate=="TexGov"){
                 print '<td><img src="images/TexGov.jpg" alt="@TexGov" /></td>';   
