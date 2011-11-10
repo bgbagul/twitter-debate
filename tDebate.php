@@ -31,35 +31,84 @@ class Timeline
                 }
             }
         }
-        usort($collectedTweets, "Timeline::sortByTime");
+        //usort($collectedTweets, "Timeline::sortByTime");
         return $collectedTweets;
     }
 
     // Makes a wrapper to search Twitter for a specific user's Tweets
+    //static function getUserTimeline($user)
+    //{
+    //    $searchUrl = "http://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
+    //    $searchUrl .= "$user";
+    //    $searchUrl .= "&count=200";
+    //
+    //    // Tests that a URL works before getting contents
+    //    // Will try 5 times before failing
+    //    for ($i=0; $i<5; $i++)
+    //    {
+    //        if (Timeline::urlExists($searchUrl))
+    //        {
+    //            $searchString = file_get_contents($searchUrl);
+    //            $jsonSearch = json_decode($searchString);
+    //            usort($jsonSearch, "Timeline::sortByTime");
+    //            return $jsonSearch;
+    //        }
+    //    }
+    //    return FALSE;
+    //}
+    
     static function getUserTimeline($user)
     {
         $searchUrl = "http://api.twitter.com/1/statuses/user_timeline.json?&screen_name=";
         $searchUrl .= "$user";
-        $searchUrl .= "&count=200";
+        $searchUrl .= "&count=200";       
 
         // Tests that a URL works before getting contents
-        // Will try 5 times before failing
-        for ($i=0; $i<5; $i++)
+        for ($i=0; $i<10; $i++)
         {
-            if (Timeline::urlExists($searchUrl))
+            $errorCode = Timeline::urlExistsWithHTTPCode($searchUrl);
+            if ($errorCode == 400)
             {
-                $searchString = file_get_contents($searchUrl);
+                echo "Rate limit exceeded on ";
+                echo "user: " . $user;
+                echo "<br>";
+                return FALSE;
+            }
+            elseif ($errorCode == 408)
+            {
+                echo "Timeout on ";
+                echo "user: " . $user;
+                echo "<br>";
+                continue;
+            }
+            elseif ($errorCode == 502)
+            {
+                echo "Bad Gateway on ";
+                echo "user: " . $user;
+                echo "<br>";
+                continue;
+            }
+            elseif ($errorCode == 503)
+            {
+                echo "Service Temporarily Available on ";
+                echo "user: " . $user;
+                echo "<br>";
+                continue;
+            }  
+            $searchString = file_get_contents($searchUrl);
+            if ($searchString !== FALSE)
+            {
                 $jsonSearch = json_decode($searchString);
-                usort($jsonSearch, "Timeline::sortByTime");
+                echo "Successfully fetched ";
+                echo "user: " . $user;
+                echo "<br>";
                 return $jsonSearch;
             }
         }
-        return FALSE;
+        return "An error has occurred";
     }
 
-    // Tests the existence of a URL
-    // From: http://stackoverflow.com/questions/1239068/ping-site-and-return-result-in-php
-    static function urlExists($url=NULL)
+    static function urlExistsWithHTTPCode($url=NULL)
     {
         if($url == NULL)
         {
@@ -74,14 +123,15 @@ class Timeline
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if($httpcode>=200 && $httpcode<300)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return $httpcode;
+        //if($httpcode>=200 && $httpcode<300)
+        //{
+        //    return true;
+        //}
+        //else
+        //{
+        //    return false;
+        //}
     }
 
     static function sortByTime($a, $b)
@@ -94,6 +144,24 @@ class Timeline
             return 0;
         }
         elseif ($timeA < $timeB)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    static function sortByScore($a, $b)
+    {
+        $scoreA = Archive::scoreTweet($a);
+        $scoreB = Archive::scoreTweet($b);
+        
+        if ($scoreA == $scoreB)
+        {
+            return 0;
+        }
+        elseif ($scoreA < $scoreB)
         {
             return 1;
         }
@@ -134,28 +202,48 @@ class StringUtility
     // Searches a string with an array of strings
     // It returns a string with words bolded that are in the array
     // Returns false otherwise
+    //static function searchStringBold($str, $arr)
+    //{
+    //    $stringResult = $str;
+    //
+    //    foreach ($arr as &$searchTerm)
+    //    {
+    //        $searchResult = stripos($stringResult, $searchTerm);
+    //        if ($searchResult !== false)
+    //        {
+    //            $stringResult = StringUtility::stringInsert("</B>", $stringResult, $searchResult + strlen($searchTerm));
+    //            $stringResult = StringUtility::stringInsert("<B>", $stringResult, $searchResult);
+    //            $buffer = $stringResult;
+    //            $position = stripos($stringResult, "</B>")+4;
+    //
+    //            while (stripos(substr($buffer,$position), $searchTerm) !== false)
+    //            {
+    //                $searchResult = stripos(substr($stringResult,$position), $searchTerm);
+    //                $stringResult = StringUtility::stringInsert("</B>", $stringResult,
+    //                                                            $position + $searchResult + strlen($searchTerm));
+    //                $stringResult = StringUtility::stringInsert("<B>", $stringResult, $position + $searchResult);
+    //                $position += stripos(substr($stringResult,$position), "</B>")+4;
+    //            }
+    //        }
+    //    }
+    //    return $stringResult;
+    //}
+    
     static function searchStringBold($str, $arr)
     {
         $stringResult = $str;
 
         foreach ($arr as &$searchTerm)
         {
-            $searchResult = stripos($stringResult, $searchTerm);
-            if ($searchResult !== false)
+            $position = 0;
+            $buffer = $stringResult;
+            while (stripos(substr($buffer,$position), $searchTerm) !== false)
             {
-                $stringResult = StringUtility::stringInsert("</B>", $stringResult, $searchResult + strlen($searchTerm));
-                $stringResult = StringUtility::stringInsert("<B>", $stringResult, $searchResult);
-                $buffer = $stringResult;
-                $position = stripos($stringResult, "</B>")+4;
-
-                while (stripos(substr($buffer,$position), $searchTerm) != false)
-                {
-                    $searchResult = stripos(substr($stringResult,$position), $searchTerm);
-                    $stringResult = StringUtility::stringInsert("</B>", $stringResult,
-                                                                $position + $searchResult + strlen($searchTerm));
-                    $stringResult = StringUtility::stringInsert("<B>", $stringResult, $position + $searchResult);
-                    $position += stripos(substr($stringResult,$position), "</B>")+4;
-                }
+                $searchResult = stripos(substr($stringResult,$position), $searchTerm);
+                $stringResult = StringUtility::stringInsert("</B>", $stringResult,
+                                                            $position + $searchResult + strlen($searchTerm));
+                $stringResult = StringUtility::stringInsert("<B>", $stringResult, $position + $searchResult);
+                $position += stripos(substr($stringResult,$position), "</B>")+4;
             }
         }
         return $stringResult;
@@ -226,7 +314,7 @@ class Archive
             $jobsSave = array();
             $taxesSave = array();
             $deficitSave = array();
-            $environmentSave = array();
+            $foreignpolicySave = array();
             
             $excludeArray = $excludeArray3; //no stop words
             
@@ -240,49 +328,57 @@ class Archive
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray1);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray1);
                         array_push($economySave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray2))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray2);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray2);
                         array_push($immigrationSave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray3))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray3);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray3);
                         array_push($healthcareSave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray4))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray4);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray4);
                         array_push($socialSecuritySave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray5))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray5);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray5);
                         array_push($jobsSave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray6))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray6);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray6);
                         array_push($taxesSave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray7))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray7);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray7);
                         array_push($deficitSave, clone $bufferTweet);
                     }
                     if (StringUtility::searchStringWithArray($tweet->text,$searchArray8))
                     {
                         $bufferTweet=$tweet;
                         $bufferTweet->boldText=StringUtility::searchStringBold($tweet->text,$searchArray8);
-                        array_push($environmentSave, clone $bufferTweet);
+                        $bufferTweet->numberOfKeywords=Archive::countKeywords($tweet->text,$searchArray8);
+                        array_push($foreignpolicySave, clone $bufferTweet);
                     }
                 }
                 $file = "tweets/" . Archive::getCandidateFolderName($candidateAccounts[0]) . "/economy.json";
@@ -300,8 +396,8 @@ class Archive
                 file_put_contents($file, json_encode($taxesSave));
                 $file = "tweets/" . Archive::getCandidateFolderName($candidateAccounts[0]) . "/deficit.json";
                 file_put_contents($file, json_encode($deficitSave));
-                $file = "tweets/" . Archive::getCandidateFolderName($candidateAccounts[0]) . "/environment.json";
-                file_put_contents($file, json_encode($environmentSave));
+                $file = "tweets/" . Archive::getCandidateFolderName($candidateAccounts[0]) . "/foreignpolicy.json";
+                file_put_contents($file, json_encode($foreignpolicySave));
                 
                 return TRUE;
         }
@@ -347,6 +443,45 @@ class Archive
             {
                 return "huntsman";
             }
+        }
+        static function countKeywords ($tweet,$search)
+        {
+            //if ($tweet->retweet_count == "100+")
+            //{
+            //    $rt = 100;
+            //}
+            //else
+            //{
+            //    $rt = $tweet->retweet_count;
+            //}
+            $score = 0;
+            foreach($search as &$term)
+            {
+                $score = $score + substr_count(strtolower($tweet), strtolower($term));
+                //echo "I found " . $term . " this many times: " . substr_count($tweet, strtolower($term));
+                //echo "<br>";
+            }
+            return $score;
+        }
+        static function scoreTweet ($tweet)
+        {
+            $score = 0;
+            $score = Archive::processRetweetCount($tweet);
+            $score = $score + 10*$tweet->numberOfKeywords;
+            return $score;
+        }
+        static function processRetweetCount ($tweet)
+        {
+            $retweet = 0;
+            if ($tweet->retweet_count == "100+")
+            {
+                $retweet = 101;
+            }
+            else
+            {
+                $retweet = $tweet->retweet_count;
+            }
+            return $retweet;
         }
     }
 ?>

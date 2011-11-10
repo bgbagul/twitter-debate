@@ -1,5 +1,5 @@
 <?php
-    $maxResponses = 3;
+    $maxResponses = 1000;
     $onlyGetOneAccount = FALSE;
 
     $twitterAccounts1 = array('BarackObama'=>'Barack Obama', 'THEHermanCain'=>'Herman Cain',
@@ -11,36 +11,44 @@
         'MicheleBachmann'=>'Michele Bachman', 'NewtGingrich'=>'Newt Gingrich',
         'GovGaryJohnson'=>'Gary Johnson', 'GovernorPerry'=>'Rick Perry', 'JonHuntsman'=>'Jon Huntsman');
     $twitterTopics = array("economy"=>"Economy", "immigration"=>"Immigration", "healthcare"=>"Health Care",
-        "socialsecurity"=>"Social Security", "jobs"=>"Jobs", "taxes"=>"Taxes", "deficit"=>"Deficit", "environment"=>"Environment");
+        "socialsecurity"=>"Social Security", "jobs"=>"Jobs", "taxes"=>"Taxes", "deficit"=>"Deficit", "foreignpolicy"=>"Foreign Policy");
 
-    $searchArray1 = array(" Economy", "Economy ", " Spend", "Spend ", " Stimulus", "Stimulus ", " Taxes", "Taxes ", " Fed", "Fed ", " Econ", "Econ ",
-        "Wall Street", "EconDebate", " Audit", "Audit ", "Money", "Consumer", "Prosperity", "Capital", "Deficit",
-        "Business", "Investment", "Bailout", "Funds", "Rich", "Poor");
-    $searchArray2 = array("Immigration", "Citizenship", "DreamAct", "Border", " Fence", "Fence ", "E-verify", "Arizona",
-        "Alabama", "deportation", "USCIS", "naturalization", " resident", "resident ", "customs", "security");
+    $searchArray1 = array(" Economy ", " Spend ", " Stimulus ", " Taxes ", " Fed", " Econ", "Wall Street", "EconDebate", " Audit ", " Money", "Consumer",
+                          "Prosperity", "Capital", "Deficit", "Business", "Investment", "Bailout", "Funds", " Rich ", "Poor");
+    $searchArray2 = array("Immigration", "Citizenship", "DreamAct", "Border", " Fence ", "E-verify", "deportation", "USCIS", "naturalization",
+                          " resident ", "customs", "border security", "patrol");
+    $searchArray5 = array("Jobs", "Unemployment", "Employment", "Worker", "Labor", "American Jobs Act", "Wall Street", "Salary", "Salaries", "Wage",
+                          "back to Work", "workforce", "Deficit", "Outsource", "Poverty", " Hire", "Union");
+    $searchArray6 = array("Taxes", "Audit", "Payroll Tax", "FairTax", "Capital gains tax", "Federal Reserve", "Flat Tax", "federal spending", "tax",
+                          "tariff", "write off", "big government", "hike", "Finance", "tax increase", "tax decrease", "writeoff", "tax cut", "income",
+                          "tax evader", "deduction");
+    $searchArray7 = array("Deficit", "Bailout", "Spending", " Cut ", "Investment", "Growth", "Funds", "Consumer", "Recovery", "fiscal gap", "debt",
+                          "inflation", "expenditure", "revenue");
+    $searchArray8 = array("ForeignPolicy", "Israel", "foreign policy", "international relations", "globalization", "trans-national", "foreign",
+                          "peaceful cooperation", "Prime Minister", "Iraq", "Afghanistan", "Libya", "drone", "military", "Middle East", "Mid East",
+                          "European Union", " EU ", " Arab", "Arab Spring", "Foreign aid", " UN ", " NATO ", "Venezuela", "defense", "military spending",
+                          "inter-governmental", "alliance", "Islamist", " war ", "Syria", "Bahrain", "Tunisia", "Egypt", "Al Qaeda", "terrorist",
+                          "terrorism", "Iran", "diplomat", "emissary", "diplomat", "emissaries", "embassy", "palestine");
+    
+    //GOING TO REMOVE
+    //$searchArray8 = array("Environment", "Green", "Gulf", "Drilling", "Global Warming", "Clean energy",
+    //    "Climate", "Renewable Energy", "Carbon footprint");
     $searchArray3 = array("Healthcare", "Obamacare", "Insured", "uninsured", " access", "access ", "socialized", "medicine", "doctor",
-        "physician", "medical", "benefits", "insurance", "Medicaid", "Medicare", "universal");
-    $searchArray4 = array("SocialSecurity", "Benefits", "disability", " SS ", "retirement");
-    $searchArray5 = array("Jobs", "Unemployment", "Employment", "Taxes", "Worker", "Labor",
-        "American Jobs Act", "Wall Street", "Companies", "Company", "Salary", "Salaries", "Wage",
-        "Work", "Deficit", "Outsource", "Poverty", "Hire", "Union");
-    $searchArray6 = array("Taxes", "Wall Street", " Fed", "Fed ", "Audit", "Payroll Tax", "FairTax", "Capital gains tax",
-        "Federal Reserve", "Flat Tax");
-    $searchArray7 = array("Deficit", "Bailout", "Spending", "Cut", "Investment", "Bank", "Economic",
-        "Growth", "Funds", "Consumer", "Recovery");
-    $searchArray8 = array("Environment", "Green", "Gulf", "Drilling", "Global Warming", "Clean energy",
-        "Climate", "Renewable Energy", "Carbon footprint");
+        "physician", "medical", "insurance", "Medicaid", "Medicare", "universal");
+    $searchArray4 = array("SocialSecurity", "Social Security", "Benefits", "disability", " SS ", "retirement", "baby boomer", "veteran", " fica ",
+                          "pension", "senior citizen", "old age", "allowance");
 
     $excludeArray = array("steve jobs", "on my way", "on way", "taping", "visit", "appearance", "dates",
                           "check it out", "t-shirt", "website", "straw poll", "ad", "poll", "press conference",
                           "appearance", "donate", "endorsement", "facebook", "livestream", "http", "mi.tt", "bit.ly", "twurl",
                           "youtu.be", "ow.ly", "whitehouse.gov", "usa.gov", "tinyurl", "mi.tt", "4sq.com", "#FF", "FollowFriday",
-                          "pic.twitter", "yfrog.com");
+                          "pic.twitter", "yfrog.com", "occupy wall street");
     $excludeArray2 = array("steve jobs", "on my way", "on way", "taping", "visit", "appearance", "dates",
                           "check it out", "t-shirt", "website", "straw poll", "ad", "poll", "press conference",
-                          "appearance", "donate", "endorsement", "facebook", "livestream");
-    $excludeArray3 = array();
-
+                          "appearance", "donate", "endorsement", "facebook", "livestream", "blog");
+    $excludeArray4 = array("steve jobs", "will address", "today");
+    $excludeArray3 = array("steve jobs");
+ 
     $toggleArray = array("One Sided Cap", "Remove Press Appearances", "Remove Links", "Remove Twitpics");
 
     if ($onlyGetOneAccount==true)
@@ -58,7 +66,7 @@
     }
     else
     {
-        $candidateAccounts1 = array("BarackObama", "whitehouse", "ObamaNews", "TheDemocrats", "BarackObamaUSA", "ObamaPalooza");
+        $candidateAccounts1 = array("BarackObama", "whitehouse", "ObamaNews", "TheDemocrats", "BarackObamaUSA");
         $candidateAccounts2 = array("THEHermanCain", "CainStaff", "Citizens4Cain");
         $candidateAccounts3 = array("MittRomney", "Mittisms", "RomneyCentral", "PlanetRomney");
         $candidateAccounts4 = array("RonPaul", "RepRonPaul", "RonPaul_2012", "RonPaulForums", "RonPaulNews", "RonPaul4Liberty");

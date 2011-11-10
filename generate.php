@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Twitter Debate</title>
+        <title>Building archive...</title>
     </head>
 
     <body>
@@ -15,16 +15,46 @@
             require "terms.php";
             require "tDebate.php";
             require "display.php";
-
+            date_default_timezone_set('America/Chicago');
             set_time_limit(60000);
-
+            
             //BUILDS A TWEET ARCHIVE OF ALL OUR CANDIDATES.
             //IT USUALLY TAKES ABOUT 5 MINUTES FOR ME.
             Archive::buildEntireArchive();
             
-            
             //BUILDS AN INDIVIDUAL CANDIDATE ARCHIVE OF JSON FILES
-            Archive::buildCandidateArchive($candidateAccounts5);
+            //Archive::buildCandidateArchive($candidateAccounts5);
+            
+            //$testString = "Production drives the economy, risk taking drives growth, and we need sound money; measurements must be dependable! #econdebate";
+            //echo Archive::countKeywords($testString,$searchArray1)
+            
+            //$testString = "Production drives the economy, risk taking drives growth, and we need sound money; measurements must be dependable! #econdebate";
+            //$tempSearchArray = $searchArray1;
+            //$resultBold = StringUtility::searchStringBold($testString,$tempSearchArray);
+            //echo $resultBold;
+            //echo "<br>";
+            //
+            //$testString = "Production drives the economy, risk taking drives growth, and we need sound money; measurements must be dependable! #econdebate";
+            //$tempSearchArray = $searchArray1;
+            //$resultBold = StringUtility::searchStringBold($testString,$tempSearchArray);
+            //echo $resultBold;
+            //echo "<br>";
+            //
+            //$testString = "Can’t reduce govt spending by continuing bailouts - Romney won’t end bailouts, Perry will http://t.co/gMkOTVB5";
+            //$tempSearchArray = $searchArray1;
+            //$resultBold = StringUtility::searchStringBold($testString,$tempSearchArray);
+            //echo $resultBold;
+            //echo "<br>";
+            //
+            //$testString = "Can’t reduce govt spending by continuing bailouts - Romney won’t end bailouts, Perry will http://t.co/gMkOTVB5";
+            //$tempSearchArray = $searchArray1;
+            //$resultBold = StringUtility::searchStringBold($testString,$tempSearchArray);
+            //echo $resultBold;
+            
+            //$result = Timeline::getUserTimelineTest("mittromney");
+            //print_r($result);
+            //$result = file_get_contents("http://api.twitter.com/1/statuses/user_timeline.json?&screen_name=mittromney&count=2");
+            //print_r($result);
             
             //SAMPLE CALLS TO RETRIEVE THE TWEETS IN THE JSON FILES
             //$economySave = json_decode(file_get_contents("tweets/obama/economy.json"));

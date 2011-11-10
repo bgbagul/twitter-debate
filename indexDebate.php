@@ -65,7 +65,7 @@
                     
                 } else if ($twitterTopic == "deficit") {
                     $searchArray = $searchArray7;
-                } else if ($twitterTopic == "environment") {
+                } else if ($twitterTopic == "foreignpolicy") {
                     $searchArray = $searchArray8;
                 }
 
@@ -155,7 +155,9 @@
                         //$sizers2 = count($results2);
 
                         $results = array_merge($results1, $results2);
-                        usort($results, "Timeline::sortByTime");
+                        usort($results, "Timeline::sortByScore");
+                        //usort($results, "Timeline::sortByTime");
+                        
                         //$i = 0;
                         //while ($i < $sizers1 + $sizers2) {
                         //
@@ -178,7 +180,7 @@
                         //}
 
                         //$results = array_merge((array)$results1, (array)$results2);
-
+                        $excludeArray = $excludeArray2;
                         foreach ($results as &$tweet)
                         {
                             $foundAStopWord = StringUtility::searchStringWithArray($tweet->text,$excludeArray);
@@ -212,9 +214,14 @@
                                 }
                                 print $tweet->boldText;
                                 //print StringUtility::searchStringBold($tweet->text,$searchArray);
-                                print "<br>";
+                                print "<br><i>";
+                                print "Score: ";
+                                print Archive::scoreTweet($tweet) . " = ";
+                                print Archive::processRetweetCount($tweet) . " retweets";
+                                print " + 10*" . $tweet->numberOfKeywords . " keywords.";
+                                print "<i><br>";
                                 print "<font size=1>@" . $tweet->name . "</font>";
-                                print "<br>";
+                                print " ";
                                 $dateTemp = new DateTime($tweet->created_at);
                                 print "<font size=1>" . date_format($dateTemp, 'D M j H:i:s') . "</font>";
                                 print "</td>";
