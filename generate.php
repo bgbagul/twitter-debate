@@ -17,7 +17,7 @@
             require "display.php";
             date_default_timezone_set('America/Chicago');
             set_time_limit(60000);
-            
+        
             //BUILDS A TWEET ARCHIVE OF ALL OUR CANDIDATES.
             //IT USUALLY TAKES ABOUT 5 MINUTES FOR ME.
             Archive::buildEntireArchive();

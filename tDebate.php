@@ -101,6 +101,8 @@ class Timeline
                 $jsonSearch = json_decode($searchString);
                 echo "Successfully fetched ";
                 echo "user: " . $user;
+                echo " ";
+                echo "Length: " . count($jsonSearch);
                 echo "<br>";
                 return $jsonSearch;
             }
@@ -152,10 +154,28 @@ class Timeline
             return -1;
         }
     }
-    static function sortByScore($a, $b)
+    static function sortByScoreGenerate($a, $b)
     {
         $scoreA = Archive::scoreTweet($a);
         $scoreB = Archive::scoreTweet($b);
+        
+        if ($scoreA == $scoreB)
+        {
+            return 0;
+        }
+        elseif ($scoreA < $scoreB)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    static function sortByScoreRetrieve($a, $b)
+    {
+        $scoreA = $a->score;
+        $scoreB = $b->score;
         
         if ($scoreA == $scoreB)
         {
@@ -444,16 +464,219 @@ class Archive
                 return "huntsman";
             }
         }
+        static function getCandidateProperNames ($account)
+        {
+            global $candidateProper1;
+            global $candidateProper2;
+            global $candidateProper3;
+            global $candidateProper4;
+            global $candidateProper5;
+            global $candidateProper6;
+            global $candidateProper7;
+            global $candidateProper8;
+            global $candidateProper9;
+            global $candidateProper10;
+            
+            if ($account == "BarackObama")
+            {
+                return $candidateProper1;
+            }
+            elseif ($account == "THEHermanCain")
+            {
+                return $candidateProper2;
+            }
+            elseif ($account == "MittRomney")
+            {
+                return $candidateProper3;
+            }
+            elseif ($account == "RonPaul")
+            {
+                return $candidateProper4;
+            }
+            elseif ($account == "RickSantorum")
+            {
+                return $candidateProper5;
+            }
+            elseif ($account == "MicheleBachmann")
+            {
+                return $candidateProper6;
+            }
+            elseif ($account == "NewtGingrich")
+            {
+                return $candidateProper7;
+            }
+            elseif ($account == "GovGaryJohnson")
+            {
+                return $candidateProper8;
+            }
+            elseif ($account == "GovernorPerry")
+            {
+                return $candidateProper9;
+            }
+            elseif ($account == "JonHuntsman")
+            {
+                return $candidateProper10;
+            }
+        }
+        static function getOtherNames ($candidate)
+        {
+            global $candidateAccounts1; //obama
+            global $candidateAccounts2; //cain
+            global $candidateAccounts3; //romney
+            global $candidateAccounts4; //paul
+            global $candidateAccounts5; //santorum
+            global $candidateAccounts6; //bachmann
+            global $candidateAccounts7; //gingrich
+            global $candidateAccounts8; //johnson
+            global $candidateAccounts9; //perry
+            global $candidateAccounts10; //huntsman
+            
+            global $candidateProper1;
+            global $candidateProper2;
+            global $candidateProper3;
+            global $candidateProper4;
+            global $candidateProper5;
+            global $candidateProper6;
+            global $candidateProper7;
+            global $candidateProper8;
+            global $candidateProper9;
+            global $candidateProper10;
+            
+            if ($candidate == "BarackObama")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "THEHermanCain")
+            {
+                return array_merge($candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "MittRomney")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "RonPaul")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "RickSantorum")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, 
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "MicheleBachmann")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "NewtGingrich")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts8, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "GovGaryJohnson")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts9,
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "GovernorPerry")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, 
+                                   $candidateAccounts10, Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("JonHuntsman"));
+            }
+            elseif ($candidate == "JonHuntsman")
+            {
+                return array_merge($candidateAccounts2, $candidateAccounts3, $candidateAccounts4, $candidateAccounts5,
+                                   $candidateAccounts6, $candidateAccounts7, $candidateAccounts8, $candidateAccounts9,
+                                    Archive::getCandidateProperNames("THEHermanCain"), 
+                                    Archive::getCandidateProperNames("MittRomney"), 
+                                    Archive::getCandidateProperNames("RonPaul"), 
+                                    Archive::getCandidateProperNames("RickSantorum"), 
+                                    Archive::getCandidateProperNames("MicheleBachmann"), 
+                                    Archive::getCandidateProperNames("NewtGingrich"), 
+                                    Archive::getCandidateProperNames("GovGaryJohnson"), 
+                                    Archive::getCandidateProperNames("GovernorPerry"));
+            }
+        }
         static function countKeywords ($tweet,$search)
         {
-            //if ($tweet->retweet_count == "100+")
-            //{
-            //    $rt = 100;
-            //}
-            //else
-            //{
-            //    $rt = $tweet->retweet_count;
-            //}
             $score = 0;
             foreach($search as &$term)
             {
@@ -463,11 +686,71 @@ class Archive
             }
             return $score;
         }
+        static function getPresentKeywords($tweets,$search)
+        {
+            $collectingArray = array();
+            foreach($tweets as &$quote)
+            {
+                    foreach($search as &$term)
+                    {
+                            if(in_array($term,$collectingArray) == FALSE)
+                            {
+                                    if(stripos($quote->text,$term) !== FALSE)
+                                    {
+                                            array_push($collectingArray,$term);
+                                    }
+                            }
+                    }
+            }
+	return $collectingArray;
+        }
         static function scoreTweet ($tweet)
         {
+            global $user1Accounts;
+            global $user2Accounts;
+            global $twitterUser1;
+            global $twitterUser2;
+            global $isAUser1Tweet;
+            global $isAUser2Tweet;
+            global $opCandidateMentionCoef;
+            global $keywordScoreCoefficient;
+            global $notOpCandidateMentionCoef;
+            
+            $user1Names = array_merge($user1Accounts,Archive::getCandidateProperNames($twitterUser1));
+            $user2Names = array_merge($user1Accounts,Archive::getCandidateProperNames($twitterUser2));
+            $user1NOTOpponentNames = array_diff(Archive::getOtherNames($twitterUser1), $user2Names);
+            $user2NOTOpponentNames = array_diff(Archive::getOtherNames($twitterUser2), $user1Names);
+            
             $score = 0;
             $score = Archive::processRetweetCount($tweet);
-            $score = $score + 10*$tweet->numberOfKeywords;
+            $score = $score + $keywordScoreCoefficient*$tweet->numberOfKeywords;
+            
+            if ($isAUser1Tweet==TRUE && $isAUser2Tweet==FALSE)
+            {
+                foreach($user2Names as &$term)
+                {
+                    $score = $score + $opCandidateMentionCoef*substr_count(strtolower($tweet->text), strtolower($term));
+                }
+                foreach($user1NOTOpponentNames as &$term)
+                {
+                    $score = $score + $notOpCandidateMentionCoef*substr_count(strtolower($tweet->text), strtolower($term));
+                }
+                //$tweet->boldText = StringUtility::searchStringBold($tweet->boldText,$user2Names);
+            }
+            elseif ($isAUser1Tweet==FALSE && $isAUser2Tweet==TRUE)
+            {
+                foreach($user1Names as &$term)
+                {
+                    $score = $score + $opCandidateMentionCoef*substr_count(strtolower($tweet->text), strtolower($term));
+                }
+                foreach($user2NOTOpponentNames as &$term)
+                {
+                    $score = $score + $notOpCandidateMentionCoef*substr_count(strtolower($tweet->text), strtolower($term));
+                }
+                //$tweet->boldText = StringUtility::searchStringBold($tweet->boldText,$user1Names);
+            }
+            
+            $tweet->score = $score;
             return $score;
         }
         static function processRetweetCount ($tweet)
