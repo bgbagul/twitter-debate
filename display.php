@@ -1,6 +1,49 @@
 <?php
 class Display
 {
+    static function candidateTitleImage ($account)
+    {
+        if ($account == "BarackObama")
+        {
+            print '<img class="titleImg" src="images/TitleBarackObama.jpg" alt="Barack Obama"/>';
+        }
+        elseif ($account == "THEHermanCain")
+        {
+            print '<img class="titleImg" src="images/TitleHermanCain.jpg" alt="Herman Cain"/>';
+        }
+        elseif ($account == "MittRomney")
+        {
+            print '<img class="titleImg" src="images/TitleMittRomney.jpg" alt="Mitt Romney"/>';
+        }
+        elseif ($account == "RonPaul")
+        {
+            print '<img class="titleImg" src="images/TitleRonPaul.jpg" alt="Ron Paul"/>';
+        }
+        elseif ($account == "RickSantorum")
+        {
+            print '<img class="titleImg" src="images/TitleRickSantorum.jpg" alt="Rick Santorum"/>';
+        }
+        elseif ($account == "MicheleBachmann")
+        {
+            print '<img class="titleImg" src="images/TitleMichelleBachmann.jpg" alt="Michelle Bachmann"/>';
+        }
+        elseif ($account == "NewtGingrich")
+        {
+            print '<img class="titleImg" src="images/TitleNewtGingrich.jpg" alt="Newt Gingrich"/>';
+        }
+        elseif ($account == "GovGaryJohnson")
+        {
+            print '<img class="titleImg" src="images/TitleGaryJohnson.jpg" alt="Gary Johnson"/>';
+        }
+        elseif ($account == "GovernorPerry")
+        {
+            print '<img class="titleImg" src="images/TitleRickPerry.jpg" alt="Rick Perry"/>';
+        }
+        elseif ($account == "JonHuntsman")
+        {
+            print '<img class="titleImg" src="images/TitleJonHuntsman.jpg" alt="Jon Huntsman"/>';
+        }
+    }
     static function candidateImage ($candidate)
     {
         global $candidateAccounts1;

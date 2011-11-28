@@ -2,7 +2,7 @@
     $maxResponses = 50;
     $onlyGetOneAccount = FALSE;
     $keywordScoreCoefficient = 20;
-    $opCandidateMentionCoef= 80;
+    $opCandidateMentionCoef= 40;
     $notOpCandidateMentionCoef = -25;
 
     $twitterAccounts1 = array('BarackObama'=>'Barack Obama', 'THEHermanCain'=>'Herman Cain',

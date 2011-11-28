@@ -78,7 +78,7 @@
             }
 
         ?>
-
+        <!--
         <div class="titleImgContainer">
             <img class="titleImg" src="images/TitleBarackObama.jpg" alt="Barack Obama"/>
             <img class="titleImg" src="images/TitleHermanCain.jpg" alt="Herman Cain"/>
@@ -91,12 +91,14 @@
             <img class="titleImg" src="images/TitleRickPerry.jpg" alt="Rick Perry"/>
             <img class="titleImg" src="images/TitleJonHuntsman.jpg" alt="Jon Huntsman"/>
         </div>
+        -->
 
         <div class="container">
 
             <div class="choiceContainer">
 
                 <span class="titleElement">
+                <br><br><br>
                     <select id="twitterAccounts1" name="twitterAccounts1[]" style="font-size:25px; color:Grey;"
                         onchange='topicChanged(document.getElementById("twitterTopics").value, this.value,
                             document.getElementById("twitterAccounts2").value)'>
@@ -117,8 +119,18 @@
                         <font size="35px" color="black">debate</font>
                     </div>
 
+                    <div style="line-height:125%; color:black; text-align:center;">
+                    <div class="titleImgContainer">
+                        <?php
+                            Display::candidateTitleImage($twitterUser1);
+                            echo '<font size="35px" color="black"> vs </font>';
+                            Display::candidateTitleImage($twitterUser2);
+                        ?>
+                    </div>
+                    </div>
+                    
                     <span style="font-size:35px; color:white;">
-                        On
+                        on
                     </span>
 
                     <select id="twitterTopics" name="twitterTopics[]" style="font-size:25px; color:Grey;"
@@ -129,6 +141,7 @@
                 </span>
 
                 <span class="titleElement">
+                <br><br><br>
                     <select id="twitterAccounts2" name="twitterAccounts2[]" style="font-size:25px; color:Grey;"
                         onchange='topicChanged(document.getElementById("twitterTopics").value, document.getElementById("twitterAccounts1").value,
                             this.value)'>
@@ -144,7 +157,6 @@
                 </span>
 
             </div>
-
 
             <div class="tweetsContainer">
 
