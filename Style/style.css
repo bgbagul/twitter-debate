@@ -1,7 +1,7 @@
 /* 
     Document   : style
     Created on : Oct 9, 2011, 7:40:21 PM
-    Author     :     Twitter Debate, v0.0
+    Author     : Twitter Debate, v0.0
     By Christopher Blair, Patrick McAuliffe, Balasaheb Bagul, Jane Janeczko, and Michael Madaus
     EECS 338 Practicum in Intelligent Information Systems (Fall 2011)
 
@@ -17,10 +17,6 @@
 root { 
     display: block;
 }
-/*
-Design by http://www.templateaccess.com
-Released for free under a Creative Commons Attribution 3.0 License
-*/
 
 body {
     margin:0;
@@ -101,24 +97,22 @@ html, .main {
 
 td.leftCell {
     background-color: #FFF0AA;
-/*    background-color: #99ED9C;*/
     color: black;
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
     padding: 10px;
-/*    border: lightgrey 4px solid;*/
     border-radius: 25px;
+    box-shadow:5px 10px 20px lightGrey
 }
 
 td.rightCell {
     background-color: lightgrey;
-/*    background-color: #B8B8B8;*/
     color: black;
     border-bottom: 1px solid lightGrey;
     margin-bottom: 5px;
     padding: 10px;
-/*    border: lightgrey 4px solid;*/
     border-radius: 25px;
+    box-shadow:2px 10px 20px lightGrey
 }
 
 .moreLink {
@@ -133,6 +127,28 @@ td.rightCell {
     border-radius: 10px 10px 10px 10px;
     width: 160px;
     margin-top: 25px;
+    box-shadow: 5px 5px 10px lightgrey;
+}
+
+.scoreLink {
+    float: left;
+    font-size: 25px;
+    cursor: pointer;
+    background-color: #31C3E7;
+    color: white;
+    height: 30px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    width: 160px;
+    margin-top: 25px;
+    box-shadow: 5px 5px 10px lightgrey;
+}
+
+.scoreContainer {
+    font-size: 14px;
+    font-style: italic;
+    display: none;
 }
 
 /*--------------------------*/
@@ -184,15 +200,6 @@ div.date
     font:normal 10px/1.8em Arial, Helvetica, sans-serif;
     text-align:right;
 }
-/*div.img
-{
-  margin: 2px;
-  border: 0px solid #0000ff;
-  height: 125px;
-  width: 125px;
-  float: left;
-  text-align: center;
-}*/
 
 .titleImgContainer {
     width:100%;
@@ -212,9 +219,11 @@ div.img img
   margin: 3px;
   border: 1px solid #ffffff;
 }
+
 div.img a:hover img {
     border: 0px solid #0000ff;
 }
+
 div.desc
 {
   text-align: center;

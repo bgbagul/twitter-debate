@@ -78,20 +78,6 @@
             }
 
         ?>
-        <!--
-        <div class="titleImgContainer">
-            <img class="titleImg" src="images/TitleBarackObama.jpg" alt="Barack Obama"/>
-            <img class="titleImg" src="images/TitleHermanCain.jpg" alt="Herman Cain"/>
-            <img class="titleImg" src="images/TitleMittRomney.jpg" alt="Mitt Romney"/>
-            <img class="titleImg" src="images/TitleRonPaul.jpg" alt="Ron Paul"/>
-            <img class="titleImg" src="images/TitleRickSantorum.jpg" alt="Rick Santorum"/>
-            <img class="titleImg" src="images/TitleMichelleBachmann.jpg" alt="Michelle Bachmann"/>
-            <img class="titleImg" src="images/TitleNewtGingrich.jpg" alt="Newt Gingrich"/>
-            <img class="titleImg" src="images/TitleGaryJohnson.jpg" alt="Gary Johnson"/>
-            <img class="titleImg" src="images/TitleRickPerry.jpg" alt="Rick Perry"/>
-            <img class="titleImg" src="images/TitleJonHuntsman.jpg" alt="Jon Huntsman"/>
-        </div>
-        -->
 
         <div class="container">
 
@@ -234,14 +220,6 @@
                             {
                                 $usePresentKeywords = $leftPresentKeywords;
                             }
-                            //print "<br><b>";
-                            //print "Intersection: ";
-                            //foreach ($usePresentKeywords as &$term)
-                            //{
-                            //    print $term . ", ";
-                            //}
-                            //print "<b>";
-                            //print_r($usePresentKeywords);
 
                             $oldLeftArr = $newLeftArr;
                             $oldRightArr = $newRightArr;
@@ -275,11 +253,6 @@
                                 }
                             }
                             $newRightArr = $collectingArray;
-                            //echo "<br>";
-                            //echo "Restricted tweets- ";
-                            //echo "Left arr length: " . count($newLeftArr) . "; ";
-                            //echo "Right arr legnth: " . count($newRightArr);
-                            //echo "<br>";
                             $collectingArray = array();
                             if(count($newLeftArr) <= 1)
                             {
@@ -291,11 +264,6 @@
                                 $newRightArr = $oldRightArr;
                                 $cntRightTweets = count($newRightArr);
                             }
-                            //echo "<br>";
-                            //echo "Relaxed restrictions on tweets- ";
-                            //echo "Left arr length: " . count($newLeftArr) . "; ";
-                            //echo "Right arr legnth: " . count($newRightArr);
-                            //echo "<br>";
                             if(count($newLeftArr) <= 1)
                             {
                                 $newLeftArr = $results1;
@@ -306,11 +274,6 @@
                                 $newRightArr = $results2;
                                 $cntRightTweets = count($newRightArr);
                             }
-                            //echo "<br>";
-                            //echo "More relaxed restrictions on tweets- ";
-                            //echo "Left arr length: " . count($newLeftArr) . "; ";
-                            //echo "Right arr legnth: " . count($newRightArr);
-                            //echo "<br>";
 
                             if ($cntRightTweets > 0 && $cntLeftTweets > 0) {
                                 if ($newLeftArr[0]->score > $newRightArr[0]->score) {
@@ -334,7 +297,6 @@
                             } else if ($cntRightTweets > 0) {
                                 array_merge($results, $newRightArr);
                             }
-                            //echo "Length of results: " . count($results);
 
                             foreach ($results as &$tweet)
                             {
@@ -366,15 +328,14 @@
                                     print "<td class='rightCell'>";
                                     print StringUtility::searchStringBold($tweet->boldText,array_merge($user1Names,$user2NOTOpponentNames));
                                 }
-                                //print $tweet->boldText;
-                                //print StringUtility::searchStringBold($tweet->text,$searchArray);
-                                print "<br><i>";
+
+                                print "<br><div class='scoreContainer'>";
                                 print "Score: ";
                                 print Archive::scoreTweet($tweet) . " = ";
                                 print Archive::processRetweetCount($tweet) . " retweets";
                                 print " + ". $keywordScoreCoefficient . "*" . $tweet->numberOfKeywords . " keywords";
-                               if ($isAUser1Tweet)
-                               {
+                                if ($isAUser1Tweet)
+                                {
                                     print " + " . $opCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user2Names) . " candidate-mentions";
                                     print " + " . $notOpCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user1NOTOpponentNames) . " other-candidate-mentions.";
                                 }
@@ -383,12 +344,12 @@
                                     print " + " . $opCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user1Names) . " candidate-mentions";
                                     print " + " . $notOpCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user2NOTOpponentNames) . " other-candidate-mentions.";
                                 }
-                                print "<i><br>";
-                                print "<font size=1>@" . $tweet->name . "</font>";
+                                print "</div>";
+                                print "<div style='font-size:12px;'>@" . $tweet->name;
                                 print " ";
                                 $dateTemp = new DateTime($tweet->created_at);
-                                print "<font size=1>" . date_format($dateTemp, 'D M j H:i:s') . "</font>";
-                                print "</td>";
+                                print "" . date_format($dateTemp, 'D M j H:i:s') . "</font>";
+                                print "</div></td>";
                                 if ($isAUser1Tweet)
                                 {
                                     print "<td></td>";
@@ -406,8 +367,8 @@
                             print "</td></tr>";
                             print "<tr id='moreLinkRow'>";
                             print "<td></td>";
-                            print "<td></td>";
-                            print "<td onclick='moreLinkClick()' class='moreLink'>More Tweets</td>";
+                            print "<td><div onclick='scoreLinkClick()' class='scoreLink'>Scores</div></td>";
+                            print "<td><div onclick='moreLinkClick()' class='moreLink'>More Tweets</div></td>";
                             print "<td></td>";
                             print "</tr>";
 
@@ -450,9 +411,8 @@
                                         print "<td class='rightCell'>";
                                         print StringUtility::searchStringBold($tweet->boldText,array_merge($user1Names,$user2NOTOpponentNames));
                                     }
-                                    //print $tweet->boldText;
-                                    //print StringUtility::searchStringBold($tweet->text,$searchArray);
-                                    print "<br><i>";
+
+                                    print "<br><div class='scoreContainer'>";
                                     print "Score: ";
                                     print Archive::scoreTweet($tweet) . " = ";
                                     print Archive::processRetweetCount($tweet) . " retweets";
@@ -467,8 +427,8 @@
                                         print " + " . $opCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user1Names) . " candidate-mentions";
                                         print " + " . $notOpCandidateMentionCoef . "*" . Archive::countKeywords($tweet->text,$user2NOTOpponentNames) . " other-candidate-mentions.";
                                     }
-                                    print "<i><br>";
-                                    print "<font size=1>@" . $tweet->name . "</font>";
+                                    print "</div>";
+                                    print "<div style='font-size:12px;'>@" . $tweet->name;
                                     print " ";
                                     $dateTemp = new DateTime($tweet->created_at);
                                     print "<font size=1>" . date_format($dateTemp, 'D M j H:i:s') . "</font>";
@@ -488,6 +448,12 @@
                             }
 
                             print "</td></tr>";
+                            print "<tr id='moreLinkRow'>";
+                            print "<td></td>";
+                            print "<td><div onclick='scoreLinkClick()' class='scoreLink'>Scores</div></td>";
+                            print "<td></td>";
+                            print "<td></td>";
+                            print "</tr>";
                         }
                     ?>
 
@@ -536,25 +502,25 @@
                         }
                     }
 
+                    function scoreLinkClick () {
+
+                        var scoreDivs = document.getElementsByClassName("scoreContainer");
+                        if (scoreDivs[0].style.display == "" || scoreDivs[0].style.display == "none") {
+                            for (var i = 0; i < scoreDivs.length; i++) {
+                                scoreDivs[i].style.display = "block";
+                            }
+
+                        } else {
+                            for (var i = 0; i < scoreDivs.length; i++) {
+                                scoreDivs[i].style.display = "none";
+                            }
+                        }
+                    }
+
                 </script>
 
             </div>
         </div>
-
-        <!--
-        <div class="titleImgContainer">
-            <img class="titleImg" src="images/TitleBarackObama.jpg" alt="Barack Obama"/>
-            <img class="titleImg" src="images/TitleHermanCain.jpg" alt="Herman Cain"/>
-            <img class="titleImg" src="images/TitleMittRomney.jpg" alt="Mitt Romney"/>
-            <img class="titleImg" src="images/TitleRonPaul.jpg" alt="Ron Paul"/>
-            <img class="titleImg" src="images/TitleRickSantorum.jpg" alt="Rick Santorum"/>
-            <img class="titleImg" src="images/TitleMichelleBachmann.jpg" alt="Michelle Bachmann"/>
-            <img class="titleImg" src="images/TitleNewtGingrich.jpg" alt="Newt Gingrich"/>
-            <img class="titleImg" src="images/TitleGaryJohnson.jpg" alt="Gary Johnson"/>
-            <img class="titleImg" src="images/TitleRickPerry.jpg" alt="Rick Perry"/>
-            <img class="titleImg" src="images/TitleJonHuntsman.jpg" alt="Jon Huntsman"/>
-        </div>
-        -->
 
     </body>
 </html>
