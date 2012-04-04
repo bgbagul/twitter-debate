@@ -3,3 +3,9 @@ syntax: glob
 \.localized
 \.hgignore
 TwitterSearch\.php
+personalPage
+political
+political backup\.zip
+political backup2\.zip
+political_local_paths\.zip
+timer
